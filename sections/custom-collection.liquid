@@ -1,0 +1,100 @@
+<div class="custom-collection">
+  <div class="custom-container">
+    {% for block in section.blocks %}
+      <div class="collection-box">
+        <a href="{{ block.settings.collection_link }}">
+          <div class="collection-box-inner">
+            {% if block.settings.image_with_text_image %}
+              {{ block.settings.image_with_text_image | image_url: width: '80px' | image_tag }}
+            {% endif %}
+
+            {% if block.settings.collection_title %}
+              <span>{{ block.settings.collection_title }}</span>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .custom-container {
+    max-width: 80%;
+    margin: -30px auto 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: #fff;
+    padding: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 11;
+  }
+
+  .custom-container a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .collection-box-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .custom-container {
+      max-width: 90%;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .custom-container img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+
+{% schema %}
+  {
+    "name": "Custom Collection",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Add Collection",
+        "type": "custom_collection",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_with_text_image",
+            "label": "Collection Image"
+          }, {
+            "type": "text",
+            "id": "collection_title",
+            "label": "Title",
+            "default": "Collection Title"
+          }, {
+            "type": "url",
+            "id": "collection_link",
+            "label": "Collection link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Collection"
+      }
+    ],
+    "limit": 1
+  }
+{% endschema %}
